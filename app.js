@@ -28,7 +28,7 @@ function addTodo (e) {
     todoDiv.appendChild(trashButton)
     
     todoList.appendChild(todoDiv)
-    todoInput.value=""
+    todoInput.value=null
 }
 
 function deleteCheck(e) {
@@ -81,12 +81,13 @@ function saveLocalTodos(todo){
     else{
         todos = JSON.parse(localStorage.getItem('todos'))
     }
-    todos.push(todo)
+    if(todo != ""){
+        todos.push(todo)
+    }
     localStorage.setItem('todos',JSON.stringify(todos))
 }
 
 function getTodos(){
-    console.log("hello")
     let todos;
     if(localStorage.getItem('todos') === null){
         todos = []
@@ -96,24 +97,24 @@ function getTodos(){
     }
     // todos.push(todo)
     todos.forEach(function(todo){
-        const todoDiv = document.createElement('div')
-    todoDiv.classList.add('todo')
-    const newTodo = document.createElement('li')
-    newTodo.innerText = todo
-    newTodo.classList.add('todo-item')
-    todoDiv.appendChild(newTodo)
-    saveLocalTodos(todoInput.value)
-    const completedButton = document.createElement('button')
-    completedButton.innerHTML = '<i class = "fas fa-check"></i>'
-    completedButton.classList.add("completed-btn")
-    todoDiv.appendChild(completedButton)
-
-    const trashButton = document.createElement('button')
-    trashButton.innerHTML = '<i class = "fas fa-trash"></i>'
-    trashButton.classList.add("trash-btn")
-    todoDiv.appendChild(trashButton)
-    
-    todoList.appendChild(todoDiv)
+        if(todo != ""){
+            const todoDiv = document.createElement('div')
+            todoDiv.classList.add('todo')
+            const newTodo = document.createElement('li')
+            newTodo.innerText = todo
+            newTodo.classList.add('todo-item')
+            todoDiv.appendChild(newTodo)
+            saveLocalTodos(todoInput.value)
+            const completedButton = document.createElement('button')
+            completedButton.innerHTML = '<i class = "fas fa-check"></i>'
+            completedButton.classList.add("completed-btn")
+            todoDiv.appendChild(completedButton)
+            const trashButton = document.createElement('button')
+            trashButton.innerHTML = '<i class = "fas fa-trash"></i>'
+            trashButton.classList.add("trash-btn")
+            todoDiv.appendChild(trashButton)
+            todoList.appendChild(todoDiv)
+        }
     })
 }
 
